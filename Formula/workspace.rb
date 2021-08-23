@@ -9,6 +9,7 @@ class Workspace < Formula
   url "https://github.com/omars-lab/workspace/archive/refs/tags/v0.0.tar.gz"
   sha256 "61253c1723a803bd7e15a3ba75d159fcd07bbc9ee8fd62c95881a343946483ac"
   license "GPL-3.0-only"
+  version "0.1"
 
   depends_on "python@3.9"
 
@@ -44,7 +45,16 @@ class Workspace < Formula
   def install
     # https://docs.brew.sh/Formula-Cookbook
     # https://docs.brew.sh/Python-for-Formula-Authors
-    virtualenv_install_with_resources
+    # https://rubydoc.brew.sh/Language/Python/Virtualenv/Virtualenv.html
+    # https://github.com/Homebrew/homebrew-core/blob/master/Formula/jrnl.rb
+    # virtualenv_install_with_resources
+    # https://docs.brew.sh/Formula-Cookbook
+    # system "env" - path looks good ...
+    # https://rubydoc.brew.sh/Language/Python/Virtualenv.html#python_names-instance_method
+    # puts python_names - printing the python names in order 
+    venv = virtualenv_create(libexec, python="python3")
+    # Install all of the resources declared on the formula into the virtualenv.
+    venv.pip_install resources
     prefix.install Dir["./*"]
   end
 

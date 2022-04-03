@@ -1,25 +1,27 @@
-# Documentation: https://docs.brew.sh/Formula-Cookbook
-#                https://rubydoc.brew.sh/Formula
-# PLEASE REMOVE ALL GENERATED COMMENTS BEFORE SUBMITTING YOUR PULL REQUEST!
+# Documentation: 
+# - https://docs.brew.sh/Python-for-Formula-Authors
+# - https://rubydoc.brew.sh/Language/Python/Virtualenv/Virtualenv.html
+# - https://github.com/Homebrew/homebrew-core/blob/master/Formula/jrnl.rb
+
 class Workspace < Formula
   include Language::Python::Virtualenv
   
   desc "Organizing my workspace."
   homepage "https://github.com/omars-lab/workspace"
-  url "https://github.com/omars-lab/workspace/archive/refs/tags/v0.0.tar.gz"
-  sha256 "61253c1723a803bd7e15a3ba75d159fcd07bbc9ee8fd62c95881a343946483ac"
+  url "https://github.com/omars-lab/workspace.git", revision: "51f07365fccc20a51d3c155d1f16ac6f38fd0777"
   license "GPL-3.0-only"
   version "0.1"
 
-  depends_on "python@3.9"
+  depends_on "omars-lab/tap/scripts"
+  depends_on "python@3.10"
 
   resource "BeautifulSoup4" do
-    url "https://files.pythonhosted.org/packages/6b/c3/d31704ae558dcca862e4ee8e8388f357af6c9d9acb0cad4ba0fbbd350d9a/beautifulsoup4-4.9.3.tar.gz"
-    sha256 "84729e322ad1d5b4d25f805bfa05b902dd96450f43842c4e99067d5e1369eb25"
+    url "https://files.pythonhosted.org/packages/a1/69/daeee6d8f22c997e522cdbeb59641c4d31ab120aba0f2c799500f7456b7e/beautifulsoup4-4.10.0.tar.gz"
+    sha256 "c23ad23c521d818955a4151a67d81580319d4bf548d3d49f4223ae041ff98891"
   end
   resource "requests" do
-    url "https://files.pythonhosted.org/packages/e7/01/3569e0b535fb2e4a6c384bdbed00c55b9d78b5084e0fb7f4d0bf523d7670/requests-2.26.0.tar.gz"
-    sha256 "b8aa58f8cf793ffd8782d3d8cb19e66ef36f7aba4353eec859e74678b01b07a7"
+    url "https://files.pythonhosted.org/packages/60/f3/26ff3767f099b73e0efa138a9998da67890793bfa475d8278f84a30fec77/requests-2.27.1.tar.gz"
+    sha256 "68d7c56fd5a8999887728ef304a6d12edc7be74f1cfa47714fc8b414525c9a61"
   end
   resource "xerox" do
     url "https://files.pythonhosted.org/packages/a8/f2/48a3fb98b128e77e0c1e15a80c71d397c1ac1a4ed6db00e3e7307f767f93/xerox-0.4.1.tar.gz"
@@ -30,32 +32,30 @@ class Workspace < Formula
     sha256 "530c9bbd4d118f4cde6194165ff484cc25b0661cd256f19e9d5fcb53fc077790"
   end
   resource "markdown" do
-    url "https://files.pythonhosted.org/packages/49/02/37bd82ae255bb4dfef97a4b32d95906187b7a7a74970761fca1360c4ba22/Markdown-3.3.4.tar.gz"
-    sha256 "31b5b491868dcc87d6c24b7e3d19a0d730d59d3e46f4eea6430a321bed387a49"
+    url "https://files.pythonhosted.org/packages/15/06/d60f21eda994b044cbd496892d4d4c5c708aa597fcaded7d421513cb219b/Markdown-3.3.6.tar.gz"
+    sha256 "76df8ae32294ec39dcf89340382882dfa12975f87f45c3ed1ecdb1e8cefc7006"
   end
   resource "pandas" do
-    url "https://files.pythonhosted.org/packages/cf/f7/6c0dd488b5f5f1c0c1a48637df45046334d0be684faaf3536429f14aa9de/pandas-1.3.2.tar.gz"
-    sha256 "cbcb84d63867af3411fa063af3de64902665bb5b3d40b25b2059e40603594e87"
+    url "https://files.pythonhosted.org/packages/5a/ac/b3b9aa2318de52e40c26ae7b9ce6d4e9d1bcdaf5da0899a691642117cf60/pandas-1.4.2.tar.gz"
+    sha256 "92bc1fc585f1463ca827b45535957815b7deb218c549b7c18402c322c7549a12"
   end
   resource "arrow" do
-    url "https://files.pythonhosted.org/packages/94/39/b5bb573821d6784640c227ccbd72fa192f7542fa0f68589fd51757046030/arrow-1.1.1.tar.gz"
-    sha256 "dee7602f6c60e3ec510095b5e301441bc56288cb8f51def14dcb3079f623823a"
+    url "https://files.pythonhosted.org/packages/48/28/30a5748af715b0ab9c2b81cf08bd9e261e47a6261e247553afb7f6421b24/arrow-1.2.2.tar.gz"
+    sha256 "05caf1fd3d9a11a1135b2b6f09887421153b94558e5ef4d090b567b47173ac2b"
+  end
+  resource "catt" do
+    url "https://files.pythonhosted.org/packages/18/ee/78ce66ebd89df45fc3c96fbfdf13996f60bbfd1a9929c14650fa33c6644f/catt-0.12.7.tar.gz"
+    sha256 "43d78f5912f0bae4c6fa83ca160ef19f5823e2e0159575317a059dc87dd877dd"
   end
 
   def install
-    # https://docs.brew.sh/Formula-Cookbook
-    # https://docs.brew.sh/Python-for-Formula-Authors
-    # https://rubydoc.brew.sh/Language/Python/Virtualenv/Virtualenv.html
-    # https://github.com/Homebrew/homebrew-core/blob/master/Formula/jrnl.rb
     # virtualenv_install_with_resources
-    # https://docs.brew.sh/Formula-Cookbook
     # system "env" - path looks good ...
     # https://rubydoc.brew.sh/Language/Python/Virtualenv.html#python_names-instance_method
     # puts python_names - printing the python names in order 
     venv = virtualenv_create(libexec, python="python3")
     # Install all of the resources declared on the formula into the virtualenv.
     venv.pip_install resources
-    prefix.install Dir["./*"]
   end
 
   test do

@@ -9,7 +9,7 @@ class Workspace < Formula
   
   desc "Organizing my workspace."
   homepage "https://github.com/omars-lab/workspace"
-  url "https://github.com/omars-lab/workspace.git", revision: "51f07365fccc20a51d3c155d1f16ac6f38fd0777"
+  url "https://github.com/omars-lab/workspace.git", revision: "d9634b89bdb4ede655750331d135bf5333b9b523"
   license "GPL-3.0-only"
   version "0.1"
 

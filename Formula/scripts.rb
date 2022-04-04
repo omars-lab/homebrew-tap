@@ -15,10 +15,15 @@ class Scripts < Formula
   desc "Organizing my scripts."
   homepage "https://github.com/omars-lab/workspace"
   # url "https://github.com/omars-lab/workspace/archive/refs/tags/v0.0.tar.gz"
-  url "https://github.com/omars-lab/workspace.git", revision: "c96a0d7cc36bc2783d5067734d44b06bfbc8c9ab"
+  url "https://github.com/omars-lab/workspace.git", revision: "9f29384f2289ded00376d2c01c43b18169eb9d09"
   license "GPL-3.0-only"
   version "0.11"
   
+  depends_on "cron-every-1d"
+  depends_on "cron-every-1h"
+  depends_on "cron-every-5m"
+  depends_on "cron-every-1m"
+
   depends_on "python@3.10"
   depends_on "python-yq"
   depends_on "maven"
@@ -55,13 +60,15 @@ class Scripts < Formula
       # rewrite_shebang detected_python_shebang, py_file
       rewrite_shebang shebang_rewriter, py_file
     end
-    
+
     bin.install Dir["scripts/*"]
     prefix.install Dir["functions"]
     prefix.install Dir["functions-completion"]
+
     system "make", "brew-install"
     ohai "Don't forget to recursively source files in #{prefix}/functions"
     ohai "Don't forget to recursively source files in #{prefix}/functions-completion"
+
   end
 
   test do

@@ -2,6 +2,7 @@
 # - https://docs.brew.sh/Python-for-Formula-Authors
 # - https://rubydoc.brew.sh/Language/Python/Virtualenv/Virtualenv.html
 # - https://github.com/Homebrew/homebrew-core/blob/master/Formula/jrnl.rb
+# - https://rubydoc.brew.sh/Language/Python/Virtualenv.html
 
 class Workspace < Formula
   include Language::Python::Virtualenv

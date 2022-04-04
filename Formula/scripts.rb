@@ -1,21 +1,25 @@
 # Documentation: 
 # - https://docs.brew.sh/Formula-Cookbook
 #   - We can do cron in a formula!
-# - https://rubydoc.brew.sh/Formula
 # - https://github.com/Homebrew/homebrew-core/blob/master/Formula/jrnl.rb
 # - https://github.com/Homebrew/brew/blob/master/docs/Formula-Cookbook.md#messaging
 # - https://stackoverflow.com/questions/41029842/easy-way-to-have-homebrew-list-all-package-dependencies
 # - https://stackoverflow.com/questions/50608871/how-do-i-write-test-for-homebrew-formula
+# - https://rubydoc.brew.sh/Formula
+# - https://rubydoc.brew.sh/Formula.html
+# - https://rubydoc.brew.sh/Language/Python/Shebang.html
 
 class Scripts < Formula
-  
+  include Language::Python::Shebang
+
   desc "Organizing my scripts."
   homepage "https://github.com/omars-lab/workspace"
   # url "https://github.com/omars-lab/workspace/archive/refs/tags/v0.0.tar.gz"
-  url "https://github.com/omars-lab/workspace.git", revision: "51f07365fccc20a51d3c155d1f16ac6f38fd0777"
+  url "https://github.com/omars-lab/workspace.git", revision: "c96a0d7cc36bc2783d5067734d44b06bfbc8c9ab"
   license "GPL-3.0-only"
   version "0.11"
   
+  depends_on "python@3.10"
   depends_on "python-yq"
   depends_on "maven"
   depends_on "jq"
@@ -36,6 +40,22 @@ class Scripts < Formula
   end
 
   def install
+    # Initiallizing Shebang Rewriter ...
+    new_shebang = libexec.to_s
+    ## Following needs to map scripts formula version to the workspace version that has the virtual env with proper deps ...
+    new_shebang["/scripts/0.11"] = "/workspace/0.1"
+    # https://github.com/Homebrew/brew/blob/9c03493774500cf16ced8938e1eb4eeae8216b20/Library/Homebrew/language/python.rb#L96-L103
+    shebang_rewriter = Utils::Shebang::RewriteInfo.new(
+      %r{^#! ?/usr/bin/(?:env )?python(?:[23](?:\.\d{1,2})?)?( |$)},
+      28, # the length of "#! /usr/bin/env pythonx.yyy "
+      "#{new_shebang}/bin/python3.10",
+    )
+    # https://www.thoughtco.com/using-glob-with-directories-2907832
+    Dir.glob('scripts/*.py').each do |py_file|
+      # rewrite_shebang detected_python_shebang, py_file
+      rewrite_shebang shebang_rewriter, py_file
+    end
+    
     bin.install Dir["scripts/*"]
     prefix.install Dir["functions"]
     prefix.install Dir["functions-completion"]

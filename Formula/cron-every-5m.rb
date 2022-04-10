@@ -2,7 +2,7 @@ class CronEvery5m < Formula
 
   desc "Organizing my cron jobs."
   homepage "https://github.com/omars-lab/workspace"
-  url "https://github.com/omars-lab/workspace.git", revision: "9f29384f2289ded00376d2c01c43b18169eb9d09"
+  url "https://github.com/omars-lab/workspace.git", revision: "c6625fc2b192c317ed5e31be81a9be35b6e507df"
   license "GPL-3.0-only"
   version "0.11"
   

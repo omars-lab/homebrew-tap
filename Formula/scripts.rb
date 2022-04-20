@@ -14,6 +14,7 @@ class Scripts < Formula
 
   desc "Organizing my scripts."
   homepage "https://github.com/omars-lab/workspace"
+  # https://docs.brew.sh/Formula-Cookbook#unstable-versions-head
   url "https://github.com/omars-lab/workspace.git", revision: "c6625fc2b192c317ed5e31be81a9be35b6e507df"
   license "GPL-3.0-only"
   version "0.11"

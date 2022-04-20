@@ -5,7 +5,7 @@ class MyCli < Formula
 
   desc "My CLI."
   homepage "https://github.com/omars-lab/my-cli"
-  url "git@github.com:omars-lab/my-cli.git", :using => :git, revision: "ef34778ca8ff17069def14258af69bc2ef2375dd"
+  url "git@github.com:omars-lab/my-cli.git", :using => :git, revision: "6da564034ddf808418649fb66d0c77a16f2b2fe2" # branch: "master" 
   license "GPL-3.0-only"
   version "0.11"
   

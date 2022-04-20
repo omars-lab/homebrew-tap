@@ -4,49 +4,32 @@
 # - https://github.com/Homebrew/homebrew-core/blob/master/Formula/jrnl.rb
 # - https://rubydoc.brew.sh/Language/Python/Virtualenv.html
 
-class Workspace < Formula
+class Personalspace < Formula
   include Language::Python::Virtualenv
-
-  option "with-general", "Builds using c12e workplace scripts."
-  option "with-c12e", "Builds using c12e workplace scripts."
-  option "with-amazon", "Builds using Amazon workplace scripts."
-  # https://www.rubyguides.com/2019/10/ruby-ternary-operator/
-  # https://docs.brew.sh/Formula-Cookbook#adding-optional-steps
   
-  desc "Organizing my **work**space."
-  homepage "https://github.com/omars-lab/workspace-career"
-  url "git@github.com:omars-lab/workspace-career.git", :using => :git, branch: (
-   ( build.with? "amazon") ? "amazon" : ( (build.with? "c12e") ? "c12e" : "general")
-  ) #, revision: "d9634b89bdb4ede655750331d135bf5333b9b523"
+  desc "Organizing my personal workspace."
+  homepage "https://github.com/omars-lab/workspace"
+  url "https://github.com/omars-lab/workspace.git", branch: "main" #, revision: "d9634b89bdb4ede655750331d135bf5333b9b523"
   license "GPL-3.0-only"
   version "0.1"
 
-  depends_on "jq"
+  depends_on "omars-lab/tap/scripts"
+  depends_on "python@3.10"
 
   # https://github.com/syhw/homebrew/blob/master/Library/Contributions/example-formula.rb
-  resource "plugins" do
-    url "git@github.com:omars-lab/plugins.git", :using => :git, branch: "master"
+  resource "hats" do
+    url "git@github.com:omars-lab/hats.git", :using => :git, branch: "master"
   end
 
   def install
+    resource("hats").stage { prefix.install Dir["."] }
     
-    resource("plugins").stage { 
-      (prefix/"flavorfultasks").install Dir["vscode/flavorfultasks/*"] 
-    }
-    # This is how i can add a breakpoint with --debug ...
-    # system "false"
-    system 'make', '-f', "#{prefix}/flavorfultasks/Makefile", 'brew-install', "BREW_PREFIX=#{prefix}"
-    bin.install "#{prefix}/vscode-reinstall-plugins"
-    (prefix/"releases").install Dir["#{prefix}/flavorfultasks/releases/*"]
-    system "chown", "-R", ":staff", "#{prefix}"
-    
-    # system "#{prefix}/bin/vscode-reinstall-plugins"
-    # There is some permission error when doing the install in the formuala ... 
-    #   Operation not permitted ... mkdir ~/.vscode/extensions/.29329293929392
-    # General practice is that brew doesnt like modifiying external dirs ...
-
-    # system "/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code", "--install-extension", "#{prefix}/flavorfultasks-0.0.1.vsix"
-    ohai "Don't forget to run: `vscode-reinstall-plugins` to install the vscode plugins!"
+    prefix.install "requirements.txt"
+    venv = virtualenv_create(libexec, python="python3")
+    pip3 = "#{libexec}/bin/pip3"
+    requirements = "#{prefix}/requirements.txt"
+    system pip3, "install", "setuptools", "-U"
+    system pip3, "install", "-v", "-r", requirements
   end
 
   test do

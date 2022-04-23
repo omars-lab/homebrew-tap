@@ -32,6 +32,7 @@ class Sharedspace < Formula
     # calling with bash ...
     system "/bin/bash", bin/"brew-debugger.sh", "#{prefix}"
     system "/bin/bash", bin/"sharedworkspace-installer.sh", "#{prefix}"
+
   end
 
   test do
@@ -46,4 +47,14 @@ class Sharedspace < Formula
     # executables being tested: `system "#{bin}/program", "do", "something"`.
     system "true"
   end
+
+  # https://github.com/Homebrew/homebrew-core/blob/master/Formula/nvm.rb
+  def caveats
+    <<~EOS
+      Please run the following to complete the installation: 
+        sharedworkspace-installer.sh
+      Note: There is no harm in running the script multiple times.
+    EOS
+  end
+
 end

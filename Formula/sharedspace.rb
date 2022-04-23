@@ -26,7 +26,9 @@ class Sharedspace < Formula
     (prefix/"functions-tools").install Dir["functions-tools/*"]
     (prefix).install "loader-brew.sh"
     (bin).install "installers/sharedworkspace-installer.sh"
-    system bin/"installers/sharedworkspace-installer.sh"
+    # brew may clone stuff from git without exec permissions ...
+    # calling with bash ...
+    system "bash", bin/"sharedworkspace-installer.sh", "#{prefix}"
   end
 
   test do

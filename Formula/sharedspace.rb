@@ -26,9 +26,12 @@ class Sharedspace < Formula
     (prefix/"functions-tools").install Dir["functions-tools/*"]
     (prefix).install "loader-brew.sh"
     (bin).install "installers/sharedworkspace-installer.sh"
+    (bin).install "installers/brew-debugger.sh"
+    # https://docs.brew.sh/Formula-Cookbook#superenv-notes
     # brew may clone stuff from git without exec permissions ...
     # calling with bash ...
-    system "bash", bin/"sharedworkspace-installer.sh", "#{prefix}"
+    system "/bin/bash", bin/"brew-debugger.sh", "#{prefix}"
+    system "/bin/bash", bin/"sharedworkspace-installer.sh", "#{prefix}"
   end
 
   test do

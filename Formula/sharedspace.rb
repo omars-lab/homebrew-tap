@@ -27,6 +27,7 @@ class Sharedspace < Formula
     (prefix).install "loader-brew.sh"
     (prefix).install "loader-shared.sh"
     (prefix).install "common.sh"
+    (bin).install Dir["scripts-shared/*"]
     (bin).install "installers/sharedworkspace-installer.sh"
     (bin).install "installers/brew-debugger.sh"
     # https://docs.brew.sh/Formula-Cookbook#superenv-notes

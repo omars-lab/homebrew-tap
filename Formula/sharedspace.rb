@@ -18,6 +18,8 @@ class Sharedspace < Formula
   #   url "git@github.com:omars-lab/hats.git", :using => :git, branch: "master"
   # end
 
+  depends_on "omars-lab/tap/lz4jsoncat"
+  
   def install
     # resource("hats").stage { prefix.install Dir["."] }
     (prefix/"functions-completion").install Dir["functions-completion/*"]

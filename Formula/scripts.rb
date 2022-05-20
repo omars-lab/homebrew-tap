@@ -18,12 +18,14 @@ class Scripts < Formula
   url "https://github.com/omars-lab/workspace.git", revision: "c6625fc2b192c317ed5e31be81a9be35b6e507df"
   license "GPL-3.0-only"
   version "0.11"
-  
+
   depends_on "cron-every-1d"
   depends_on "cron-every-1h"
   depends_on "cron-every-5m"
   depends_on "cron-every-1m"
-
+  
+  depends_on "omars-lab/tap/lz4jsoncat"
+  depends_on "chrome-cli"
   depends_on "python@3.10"
   depends_on "python-yq"
   depends_on "maven"
@@ -35,7 +37,7 @@ class Scripts < Formula
   depends_on "the_silver_searcher"
   depends_on "nvm"
   depends_on "tree"
-  
+
   # https://github.com/ytdl-org/youtube-dl/
   depends_on "youtube-dl"
   # https://github.com/rodionovd/homebrew-taps

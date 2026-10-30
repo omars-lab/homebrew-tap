@@ -1,7 +1,7 @@
 class ClaudeCacheNudge < Formula
   desc "Mac reminder before a Claude Code session's prompt cache runs out"
   homepage "https://bytesofpurpose.com/craft/generative-ai/claude-code-techniques/"
-  # TODO: point at the public gist's raw files once Omar makes the gist, and fill in the checksum.
+  # TODO: point at the public gist's raw files once the gist exists, and fill in the checksum.
   url "https://gist.githubusercontent.com/omars-lab/GIST_ID/raw/REVISION/cache-nudge.mjs"
   version "0.1.0"
   sha256 "0000000000000000000000000000000000000000000000000000000000000000"
@@ -19,14 +19,15 @@ class ClaudeCacheNudge < Formula
   def install
     libexec.install "cache-nudge.mjs"
     resource("applescript").stage { libexec.install "cache-nudge.applescript" }
+    # CACHE_NUDGE_COMMAND tells the script's install to run in place: no copy into ~/.claude/hooks/,
+    # no launch agent of its own, and a hook that calls this stable command, so brew upgrade reaches it.
     (bin/"claude-cache-nudge").write <<~SH
       #!/bin/bash
-      exec "#{formula_opt_bin("node")}/node" "#{libexec}/cache-nudge.mjs" "$@"
+      export CACHE_NUDGE_COMMAND="#{opt_bin}/claude-cache-nudge"
+      exec "#{Formula["node"].opt_bin}/node" "#{libexec}/cache-nudge.mjs" "$@"
     SH
   end
 
-  # brew services runs the check every minute, so the script's own install must not load its own
-  # launch agent too: run it with --no-launchctl (see caveats).
   service do
     run [opt_bin/"claude-cache-nudge", "check"]
     run_type :interval
@@ -38,13 +39,16 @@ class ClaudeCacheNudge < Formula
   def caveats
     <<~EOS
       Homebrew does not edit ~/.claude. To add the reminder's hooks to Claude Code, run:
-        claude-cache-nudge install --no-launchctl
+        claude-cache-nudge install
       Then start the check that runs every minute:
         brew services start claude-cache-nudge
     EOS
   end
 
   test do
-    system bin/"claude-cache-nudge", "status", "--home", testpath
+    system bin/"claude-cache-nudge", "install", "--home", testpath, "--no-launchctl"
+    assert_match "\"#{opt_bin}/claude-cache-nudge\" hook", (testpath/".claude/settings.json").read
+    refute_path_exists testpath/".claude/hooks/claude-cache-nudge.mjs"
+    system bin/"claude-cache-nudge", "uninstall", "--home", testpath, "--no-launchctl"
   end
 end

@@ -1,19 +1,18 @@
 class ClaudeCacheNudge < Formula
   desc "Mac reminder before a Claude Code session's prompt cache runs out"
-  homepage "https://bytesofpurpose.com/craft/generative-ai/claude-code-techniques/"
-  # TODO: point at the public gist's raw files once the gist exists, and fill in the checksum.
-  url "https://gist.githubusercontent.com/omars-lab/GIST_ID/raw/REVISION/cache-nudge.mjs"
+  homepage "https://bytesofpurpose.com/craft/generative-ai/claude-code-techniques/a-reminder-before-the-cache-runs-out"
+  # The public gist holds both files; the url pins one revision of it.
+  url "https://gist.githubusercontent.com/omars-lab/e837c737bf28718412422783f1f30812/raw/35571e4ef55eb159849fea936bcc9785af41b214/cache-nudge.mjs"
   version "0.1.0"
-  sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+  sha256 "f80ff20fe07aa62e661cc53c05d7534e844ddbc6fb71dc621a5ba7a5c506f1d8"
   license "MIT"
 
   depends_on :macos
   depends_on "node"
 
   resource "applescript" do
-    # TODO: the same gist's second file.
-    url "https://gist.githubusercontent.com/omars-lab/GIST_ID/raw/REVISION/cache-nudge.applescript"
-    sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+    url "https://gist.githubusercontent.com/omars-lab/e837c737bf28718412422783f1f30812/raw/35571e4ef55eb159849fea936bcc9785af41b214/cache-nudge.applescript"
+    sha256 "d33bd04228037c9a4712e7e72f0a7eca8f5d4cd5cd43c81c8666e4496968219f"
   end
 
   def install
@@ -24,7 +23,7 @@ class ClaudeCacheNudge < Formula
     (bin/"claude-cache-nudge").write <<~SH
       #!/bin/bash
       export CACHE_NUDGE_COMMAND="#{opt_bin}/claude-cache-nudge"
-      exec "#{Formula["node"].opt_bin}/node" "#{libexec}/cache-nudge.mjs" "$@"
+      exec "#{formula_opt_bin("node")}/node" "#{libexec}/cache-nudge.mjs" "$@"
     SH
   end
 

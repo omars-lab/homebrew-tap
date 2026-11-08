@@ -1,17 +1,11 @@
-# Documentation: 
-# - https://docs.brew.sh/Python-for-Formula-Authors
-# - https://rubydoc.brew.sh/Language/Python/Virtualenv/Virtualenv.html
-# - https://github.com/Homebrew/homebrew-core/blob/master/Formula/jrnl.rb
-# - https://rubydoc.brew.sh/Language/Python/Virtualenv.html
-
 class Sharedspace < Formula
   include Language::Python::Virtualenv
-  
-  desc "Organizing my shared workspace."
+
+  desc "Organizing my shared workspace"
   homepage "https://github.com/omars-lab/workspace"
-  url "https://github.com/omars-lab/workspace.git", branch: "main" #, revision: "d9634b89bdb4ede655750331d135bf5333b9b523"
-  license "GPL-3.0-only"
+  url "https://github.com/omars-lab/workspace.git", branch: "main" # , revision: "d9634b89bdb4ede655750331d135bf5333b9b523"
   version "0.1"
+  license "GPL-3.0-only"
 
   # # https://github.com/syhw/homebrew/blob/master/Library/Contributions/example-formula.rb
   # resource "hats" do
@@ -19,25 +13,32 @@ class Sharedspace < Formula
   # end
 
   depends_on "omars-lab/tap/lz4jsoncat"
-  
+
   def install
     # resource("hats").stage { prefix.install Dir["."] }
     (prefix/"functions-completion").install Dir["functions-completion/*"]
     (prefix/"functions-extensions").install Dir["functions-extensions/*"]
     (prefix/"functions-shortcuts").install Dir["functions-shortcuts/*"]
     (prefix/"functions-tools").install Dir["functions-tools/*"]
-    (prefix).install "loader-brew.sh"
-    (prefix).install "loader-shared.sh"
-    (prefix).install "common.sh"
-    (bin).install Dir["scripts-shared/*"]
-    (bin).install "installers/sharedworkspace-installer.sh"
-    (bin).install "installers/brew-debugger.sh"
+    prefix.install "loader-brew.sh"
+    prefix.install "loader-shared.sh"
+    prefix.install "common.sh"
+    bin.install Dir["scripts-shared/*"]
+    bin.install "installers/sharedworkspace-installer.sh"
+    bin.install "installers/brew-debugger.sh"
     # https://docs.brew.sh/Formula-Cookbook#superenv-notes
     # brew may clone stuff from git without exec permissions ...
     # calling with bash ...
-    system "/bin/bash", bin/"brew-debugger.sh", "#{prefix}"
-    system "/bin/bash", bin/"sharedworkspace-installer.sh", "#{prefix}"
+    system "/bin/bash", bin/"brew-debugger.sh", prefix.to_s
+    system "/bin/bash", bin/"sharedworkspace-installer.sh", prefix.to_s
+  end
 
+  def caveats
+    <<~EOS
+      Please run the following to complete the installation:#{" "}
+        sharedworkspace-installer.sh
+      Note: There is no harm in running the script multiple times.
+    EOS
   end
 
   test do
@@ -54,12 +55,4 @@ class Sharedspace < Formula
   end
 
   # https://github.com/Homebrew/homebrew-core/blob/master/Formula/nvm.rb
-  def caveats
-    <<~EOS
-      Please run the following to complete the installation: 
-        sharedworkspace-installer.sh
-      Note: There is no harm in running the script multiple times.
-    EOS
-  end
-
 end

@@ -1,31 +1,25 @@
-# Documentation: 
-# - https://docs.brew.sh/Python-for-Formula-Authors
-# - https://rubydoc.brew.sh/Language/Python/Virtualenv/Virtualenv.html
-# - https://github.com/Homebrew/homebrew-core/blob/master/Formula/jrnl.rb
-# - https://rubydoc.brew.sh/Language/Python/Virtualenv.html
-
 class Personalspace < Formula
   include Language::Python::Virtualenv
-  
-  desc "Organizing my personal workspace."
+
+  desc "Organizing my personal workspace"
   homepage "https://github.com/omars-lab/workspace"
-  url "https://github.com/omars-lab/workspace.git", branch: "main" #, revision: "d9634b89bdb4ede655750331d135bf5333b9b523"
-  license "GPL-3.0-only"
+  url "https://github.com/omars-lab/workspace.git", branch: "main" # , revision: "d9634b89bdb4ede655750331d135bf5333b9b523"
   version "0.1"
+  license "GPL-3.0-only"
 
   depends_on "omars-lab/tap/scripts"
   depends_on "python@3.10"
 
   # https://github.com/syhw/homebrew/blob/master/Library/Contributions/example-formula.rb
   resource "hats" do
-    url "git@github.com:omars-lab/hats.git", :using => :git, branch: "master"
+    url "git@github.com:omars-lab/hats.git", using: :git, branch: "master"
   end
 
   def install
-    resource("hats").stage { prefix.install Dir["."] }
-    
+    resource("hats").stage { prefix.install "." }
+
     prefix.install "requirements.txt"
-    venv = virtualenv_create(libexec, python="python3")
+    virtualenv_create(libexec, "python3")
     pip3 = "#{libexec}/bin/pip3"
     requirements = "#{prefix}/requirements.txt"
     system pip3, "install", "setuptools", "-U"
@@ -45,7 +39,6 @@ class Personalspace < Formula
     system "true"
   end
 end
-
 
 # resource "BeautifulSoup4" do
 #   url "https://files.pythonhosted.org/packages/a1/69/daeee6d8f22c997e522cdbeb59641c4d31ab120aba0f2c799500f7456b7e/beautifulsoup4-4.10.0.tar.gz"
@@ -87,7 +80,7 @@ end
 # virtualenv_install_with_resources
 # system "env" - path looks good ...
 # https://rubydoc.brew.sh/Language/Python/Virtualenv.html#python_names-instance_method
-# puts python_names - printing the python names in order 
+# puts python_names - printing the python names in order
 
 # ohai "Installed virtual env"
 # Install all of the resources declared on the formula into the virtualenv.

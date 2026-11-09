@@ -5,7 +5,6 @@ class ClaudeCacheNudge < Formula
   url "https://gist.githubusercontent.com/omars-lab/e837c737bf28718412422783f1f30812/raw/35571e4ef55eb159849fea936bcc9785af41b214/cache-nudge.mjs"
   version "0.1.0"
   sha256 "f80ff20fe07aa62e661cc53c05d7534e844ddbc6fb71dc621a5ba7a5c506f1d8"
-  license "MIT"
 
   depends_on :macos
   depends_on "node"

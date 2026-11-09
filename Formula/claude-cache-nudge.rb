@@ -2,15 +2,15 @@ class ClaudeCacheNudge < Formula
   desc "Mac reminder before a Claude Code session's prompt cache runs out"
   homepage "https://bytesofpurpose.com/craft/generative-ai/claude-code-techniques/a-reminder-before-the-cache-runs-out"
   # The public gist holds both files; the url pins one revision of it.
-  url "https://gist.githubusercontent.com/omars-lab/e837c737bf28718412422783f1f30812/raw/433218694873c8e2d581c351a72a2caffa39b2a8/cache-nudge.mjs"
-  version "0.1.1"
-  sha256 "5b306a3a8fa319b130ad646a5bb1a7d39e778fe9b08b5da10f11916dd73d511a"
+  url "https://gist.githubusercontent.com/omars-lab/e837c737bf28718412422783f1f30812/raw/3dd597a166c57c2f0e12e35fe6a3e0bf70b8e6c5/cache-nudge.mjs"
+  version "0.1.2"
+  sha256 "128e5871b93723fa1780c7b2892c5ef0a6532962ac96be1e7a8dd04d9f25c72a"
 
   depends_on :macos
   depends_on "node"
 
   resource "applescript" do
-    url "https://gist.githubusercontent.com/omars-lab/e837c737bf28718412422783f1f30812/raw/433218694873c8e2d581c351a72a2caffa39b2a8/cache-nudge.applescript"
+    url "https://gist.githubusercontent.com/omars-lab/e837c737bf28718412422783f1f30812/raw/3dd597a166c57c2f0e12e35fe6a3e0bf70b8e6c5/cache-nudge.applescript"
     sha256 "d33bd04228037c9a4712e7e72f0a7eca8f5d4cd5cd43c81c8666e4496968219f"
   end
 
@@ -49,5 +49,15 @@ class ClaudeCacheNudge < Formula
     assert_equal "\"#{opt_bin}/claude-cache-nudge\" hook", settings.dig("hooks", "Stop", 0, "hooks", 0, "command")
     refute_path_exists testpath/".claude/hooks/claude-cache-nudge.mjs"
     system bin/"claude-cache-nudge", "uninstall", "--home", testpath, "--no-launchctl"
+
+    # A settings.json kept as a link (a dotfiles repo) stays a link, and the hooks land in its target.
+    linked = testpath/"linked"
+    (linked/"dotfiles").mkpath
+    (linked/".claude").mkpath
+    (linked/"dotfiles/settings.json").write "{}\n"
+    (linked/".claude/settings.json").make_symlink linked/"dotfiles/settings.json"
+    system bin/"claude-cache-nudge", "install", "--home", linked, "--no-launchctl"
+    assert_predicate linked/".claude/settings.json", :symlink?
+    assert_match "claude-cache-nudge", (linked/"dotfiles/settings.json").read
   end
 end

@@ -45,7 +45,8 @@ class ClaudeCacheNudge < Formula
 
   test do
     system bin/"claude-cache-nudge", "install", "--home", testpath, "--no-launchctl"
-    assert_match "\"#{opt_bin}/claude-cache-nudge\" hook", (testpath/".claude/settings.json").read
+    settings = JSON.parse((testpath/".claude/settings.json").read)
+    assert_equal "\"#{opt_bin}/claude-cache-nudge\" hook", settings.dig("hooks", "Stop", 0, "hooks", 0, "command")
     refute_path_exists testpath/".claude/hooks/claude-cache-nudge.mjs"
     system bin/"claude-cache-nudge", "uninstall", "--home", testpath, "--no-launchctl"
   end

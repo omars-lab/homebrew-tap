@@ -2,15 +2,15 @@ class ClaudeCacheNudge < Formula
   desc "Mac reminder before a Claude Code session's prompt cache runs out"
   homepage "https://bytesofpurpose.com/craft/generative-ai/claude-code-techniques/a-reminder-before-the-cache-runs-out"
   # The public gist holds both files; the url pins one revision of it.
-  url "https://gist.githubusercontent.com/omars-lab/e837c737bf28718412422783f1f30812/raw/35571e4ef55eb159849fea936bcc9785af41b214/cache-nudge.mjs"
-  version "0.1.0"
-  sha256 "f80ff20fe07aa62e661cc53c05d7534e844ddbc6fb71dc621a5ba7a5c506f1d8"
+  url "https://gist.githubusercontent.com/omars-lab/e837c737bf28718412422783f1f30812/raw/433218694873c8e2d581c351a72a2caffa39b2a8/cache-nudge.mjs"
+  version "0.1.1"
+  sha256 "5b306a3a8fa319b130ad646a5bb1a7d39e778fe9b08b5da10f11916dd73d511a"
 
   depends_on :macos
   depends_on "node"
 
   resource "applescript" do
-    url "https://gist.githubusercontent.com/omars-lab/e837c737bf28718412422783f1f30812/raw/35571e4ef55eb159849fea936bcc9785af41b214/cache-nudge.applescript"
+    url "https://gist.githubusercontent.com/omars-lab/e837c737bf28718412422783f1f30812/raw/433218694873c8e2d581c351a72a2caffa39b2a8/cache-nudge.applescript"
     sha256 "d33bd04228037c9a4712e7e72f0a7eca8f5d4cd5cd43c81c8666e4496968219f"
   end
 

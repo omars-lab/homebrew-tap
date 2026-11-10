@@ -50,7 +50,11 @@ jobs:
 
       - run: brew test-bot --only-tap-syntax
 
-      - run: brew test-bot --only-formulae
+      # Every formula gets the style and audit check above. Only claude-cache-nudge is built and
+      # tested, on every pull request whether it changed or not, because blog readers install it
+      # and a broken install should show up here first. The other formulas are personal installers
+      # for one Mac's setup: they need other people's taps and Mac-only tools, so CI doesn't build them.
+      - run: brew test-bot --only-formulae --testing-formulae=omars-lab/tap/claude-cache-nudge
         if: github.event_name == 'pull_request'
 
       - name: Upload bottles as artifact

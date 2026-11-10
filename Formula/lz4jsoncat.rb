@@ -1,12 +1,10 @@
-
 class Lz4jsoncat < Formula
-  
-  desc "Tool for decompressing mozilla browser state files."
+  desc "Tool for decompressing mozilla browser state files"
   homepage "https://github.com/andikleen/lz4json"
-  url "https://github.com/andikleen/lz4json.git", branch: "master"
-  license "GPL-3.0-only"
+  url "https://github.com/andikleen/lz4json.git", revision: "c53b374267a461a56f3da942ada0643692aa235e"
   version "0.1"
-  
+  license "GPL-3.0-only"
+
   depends_on "lz4"
 
   def install
@@ -17,5 +15,4 @@ class Lz4jsoncat < Formula
   test do
     system "true"
   end
-
 end

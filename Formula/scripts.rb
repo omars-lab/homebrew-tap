@@ -26,13 +26,7 @@ class Scripts < Formula
   depends_on "the_silver_searcher"
   depends_on "tree"
   depends_on "watch"
-
-  # https://github.com/ytdl-org/youtube-dl/
-  depends_on "youtube-dl"
-  # https://github.com/rodionovd/homebrew-taps
-  unless File.directory?("/Applications/OpenSCAD.app")
-    depends_on "openscad"
-  end
+  depends_on "yt-dlp"
 
   def install
     # Initiallizing Shebang Rewriter ...

@@ -22,7 +22,7 @@ class Workspace < Formula
 
   # https://github.com/syhw/homebrew/blob/master/Library/Contributions/example-formula.rb
   resource "plugins" do
-    url "git@github.com:omars-lab/plugins.git", using: :git, branch: "master"
+    url "git@github.com:omars-lab/plugins.git", using: :git, revision: "63b3bfc76fc18670021b318f41d8b2b93109653a"
   end
 
   def install

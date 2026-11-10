@@ -3,7 +3,7 @@ class Sharedspace < Formula
 
   desc "Organizing my shared workspace"
   homepage "https://github.com/omars-lab/workspace"
-  url "https://github.com/omars-lab/workspace.git", branch: "main" # , revision: "d9634b89bdb4ede655750331d135bf5333b9b523"
+  url "https://github.com/omars-lab/workspace.git", revision: "4fc188486bd7dff30e0b44294e6e983755333351"
   version "0.1"
   license "GPL-3.0-only"
 
